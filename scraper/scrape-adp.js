@@ -143,6 +143,12 @@ const POSITION_FULL_TO_ABBR = {
   "TIGHT END":     "TE",
 };
 
+// Players listed at a non-fantasy position (e.g. CB) who should be treated
+// as a specific fantasy position for scoring purposes.
+const PLAYER_POSITION_OVERRIDES = {
+  "Travis Hunter": "WR",
+};
+
 /** Resolve a human-readable position abbreviation from player + appearance objects. */
 function resolvePosition(app, player) {
   // Appearances rarely carry position; try anyway
@@ -364,11 +370,11 @@ async function main() {
 
     const player = playerMap.get(playerId) || {};
 
-    const position = resolvePosition(app, player);
-    if (!POSITIONS.has(position)) continue;
-
     const firstName      = pick(player, "first_name", "firstName");
     const lastName       = pick(player, "last_name", "lastName");
+    const fullName       = `${firstName} ${lastName}`.trim();
+    const position       = PLAYER_POSITION_OVERRIDES[fullName] || resolvePosition(app, player);
+    if (!POSITIONS.has(position)) continue;
     // Resolve team abbreviation: prefer explicit name fields, then look up team_id in the
     // teams array returned by the players endpoint, then try the hardcoded UUID map,
     // then fall back to team_id as-is.

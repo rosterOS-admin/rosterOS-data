@@ -1360,6 +1360,16 @@
     "byeWeek": ""
   },
   {
+    "id": "a611865a-cebc-4504-9477-6b69484480b1",
+    "name": "Travis Hunter",
+    "adp": 137.4,
+    "projectedPoints": 79.1,
+    "positionRank": "",
+    "position": "WR",
+    "team": "JAX",
+    "byeWeek": ""
+  },
+  {
     "id": "46128737-06bc-495b-8126-938ec626bec7",
     "name": "Rashid Shaheed",
     "adp": 138.7,
@@ -5646,7 +5656,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "SF",
     "byeWeek": ""
   },
   {
@@ -8946,7 +8956,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "SF",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -12771,7 +12781,7 @@
   },
   {
     "id": "afc8de3d-259c-4ad0-9507-680e9e1c621b",
-    "name": "Irvin Charles",
+    "name": "Irv Charles",
     "adp": null,
     "projectedPoints": 0,
     "positionRank": "",
@@ -14096,7 +14106,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "SF",
     "byeWeek": ""
   },
   {
