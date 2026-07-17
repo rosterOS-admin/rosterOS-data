@@ -1,5 +1,5 @@
 {
-  "_fitted": "field_context.py 2026-07-16 \u2014 DK Millionaire dump curves; lift BORROWED from BBM (no public DK advancement data)",
+  "_fitted": "field_context.py 2026-07-16b \u2014 DK Millionaire dump curves; lift/capital/timing/run BORROWED from BBM (no public DK advancement data)",
   "pickSurvival": {
     "sigmaByRound": {
       "1": 2.84,
@@ -44,6 +44,28 @@
       "18": 1.1,
       "19": 5.72,
       "20": 12.51
+    },
+    "runShiftByCount": {
+      "QB": {
+        "1": -0.32,
+        "2": -0.72,
+        "3": -1.24
+      },
+      "RB": {
+        "1": -0.37,
+        "2": -0.79,
+        "3": -1.54
+      },
+      "WR": {
+        "1": -0.24,
+        "2": -0.39,
+        "3": -0.41
+      },
+      "TE": {
+        "1": -0.62,
+        "2": -1.03,
+        "3": -2.14
+      }
     }
   },
   "constructionByRound": {
@@ -265,6 +287,241 @@
       "finalsRatio": 1.033,
       "finalsRatioSpread": 0.025,
       "finalsSeasons": 4
+    },
+    "zero_rb5": {
+      "fieldShare": 0.1384,
+      "advLiftPP": -8.04,
+      "advLiftSpreadPP": 0.96,
+      "seasons": 2,
+      "finalsRatio": null,
+      "finalsRatioSpread": null,
+      "finalsSeasons": 0
+    },
+    "rb_heavy5": {
+      "fieldShare": 0.0806,
+      "advLiftPP": 9.42,
+      "advLiftSpreadPP": 2.66,
+      "seasons": 2,
+      "finalsRatio": null,
+      "finalsRatioSpread": null,
+      "finalsSeasons": 0
+    },
+    "elite_qb": {
+      "fieldShare": 0.2969,
+      "advLiftPP": -0.64,
+      "advLiftSpreadPP": 3.55,
+      "seasons": 2,
+      "finalsRatio": null,
+      "finalsRatioSpread": null,
+      "finalsSeasons": 0
+    },
+    "late_qb": {
+      "fieldShare": 0.1882,
+      "advLiftPP": 0.79,
+      "advLiftSpreadPP": 3.07,
+      "seasons": 2,
+      "finalsRatio": null,
+      "finalsRatioSpread": null,
+      "finalsSeasons": 0
+    },
+    "te_premium": {
+      "fieldShare": 0.2508,
+      "advLiftPP": -3.4,
+      "advLiftSpreadPP": 0.37,
+      "seasons": 2,
+      "finalsRatio": null,
+      "finalsRatioSpread": null,
+      "finalsSeasons": 0
+    }
+  },
+  "capitalLift": {
+    "QB": {
+      "1": {
+        "fieldShare": 0.0772,
+        "advLiftPP": 0.2,
+        "advLiftSpreadPP": 2.02,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "2": {
+        "fieldShare": 0.3289,
+        "advLiftPP": -1.24,
+        "advLiftSpreadPP": 1.84,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "3": {
+        "fieldShare": 0.297,
+        "advLiftPP": 0.38,
+        "advLiftSpreadPP": 1.31,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "4": {
+        "fieldShare": 0.2654,
+        "advLiftPP": 1.0,
+        "advLiftSpreadPP": 1.11,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "5": {
+        "fieldShare": 0.0316,
+        "advLiftPP": 0.21,
+        "advLiftSpreadPP": 1.55,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      }
+    },
+    "RB": {
+      "1": {
+        "fieldShare": 0.122,
+        "advLiftPP": 7.45,
+        "advLiftSpreadPP": 0.13,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "2": {
+        "fieldShare": 0.3413,
+        "advLiftPP": 2.25,
+        "advLiftSpreadPP": 0.39,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "3": {
+        "fieldShare": 0.3738,
+        "advLiftPP": -2.07,
+        "advLiftSpreadPP": 1.89,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "4": {
+        "fieldShare": 0.1389,
+        "advLiftPP": -6.58,
+        "advLiftSpreadPP": 1.26,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "5": {
+        "fieldShare": 0.024,
+        "advLiftPP": -4.95,
+        "advLiftSpreadPP": 0.0,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      }
+    },
+    "WR": {
+      "1": {
+        "fieldShare": 0.2843,
+        "advLiftPP": -3.35,
+        "advLiftSpreadPP": 0.35,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "2": {
+        "fieldShare": 0.3885,
+        "advLiftPP": -0.25,
+        "advLiftSpreadPP": 0.49,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "3": {
+        "fieldShare": 0.2394,
+        "advLiftPP": 2.72,
+        "advLiftSpreadPP": 0.19,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "4": {
+        "fieldShare": 0.0686,
+        "advLiftPP": 5.69,
+        "advLiftSpreadPP": 2.12,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "5": {
+        "fieldShare": 0.0192,
+        "advLiftPP": 1.52,
+        "advLiftSpreadPP": 1.26,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      }
+    },
+    "TE": {
+      "1": {
+        "fieldShare": 0.0766,
+        "advLiftPP": -3.57,
+        "advLiftSpreadPP": 0.26,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "2": {
+        "fieldShare": 0.2321,
+        "advLiftPP": -1.51,
+        "advLiftSpreadPP": 0.58,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "3": {
+        "fieldShare": 0.2293,
+        "advLiftPP": 0.1,
+        "advLiftSpreadPP": 0.52,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "4": {
+        "fieldShare": 0.3003,
+        "advLiftPP": 1.92,
+        "advLiftSpreadPP": 0.69,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      },
+      "5": {
+        "fieldShare": 0.1616,
+        "advLiftPP": 0.55,
+        "advLiftSpreadPP": 0.19,
+        "seasons": 2,
+        "finalsRatio": null,
+        "finalsRatioSpread": null,
+        "finalsSeasons": 0
+      }
     }
   },
   "currentFieldShare": {
