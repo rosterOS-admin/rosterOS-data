@@ -2,29 +2,49 @@
 /**
  * scrape-adp.js — Underdog Fantasy ADP fetcher
  *
- * Fetches player and ADP data from two public Underdog Stats API endpoints
+ * Fetches player and ADP data from public Underdog Stats API endpoints
  * (no login or cookies required) and merges them into the pipeline CSV.
  *
  *   GET /v1/slates/{slate}/players          — player roster (id, name, position, team)
  *   GET /v1/slates/{slate}/scoring_types/{scoring_type}/appearances
  *                                           — ADP, projected points, position rank
  *
+ * ADP is PER-SLATE, and each Underdog tournament draws from its own slate, so
+ * ADP differs by tournament (confirmed 2026-08-04: top of board identical,
+ * mid/late diverges up to ~20 spots in the format-predicted direction — the
+ * Eliminator drafts floor RBs earlier, Weekly Winners drafts ceilings earlier).
+ * We fetch three slates:
+ *   • Best Ball Mania (default) — also the slate the entire dog family shares
+ *   • The Eliminator            — survivor / floor format
+ *   • Weekly Winners            — weekly-lottery / ceiling format (Weekly Woofs too)
+ * The BBM output is unchanged (data/adp.csv); the two alt formats write their
+ * own CSVs so downstream can build per-tournament ADP anchors.
+ *
+ * Discovering slate ids: GET api.underdogfantasy.com/v2/lobby maps every
+ * tournament title → slate_id (tournaments[].tournament_rounds[].slate_id,
+ * weekly_winners[].slate_id). Re-check these each season if ADP looks stale.
+ *
  * The output CSV matches the pipeline schema:
  *   id, firstName, lastName, adp, projectedPoints, positionRank,
  *   slotName, teamName, lineupStatus, byeWeek
  *
- * Outputs:
- *   • data/adp.csv                   (latest, consumed by the build pipeline)
- *   • snapshots/adp_YYYY-MM-DD.csv   (daily historical snapshot)
+ * Outputs (per slate):
+ *   • data/adp.csv                            (BBM — consumed by the build pipeline)
+ *   • data/adp-eliminator.csv                 (The Eliminator)
+ *   • data/adp-weekly.csv                     (Weekly Winners)
+ *   • snapshots/{prefix}_YYYY-MM-DD.csv       (daily historical snapshot each)
  *
  * Usage:
- *   node scrape-adp.js                       # normal run
+ *   node scrape-adp.js                       # normal run (all slates)
  *   node scrape-adp.js --dry-run             # fetch only, don't write files
- *   node scrape-adp.js --output ./out.csv    # custom output path
- *   node scrape-adp.js --rankings-id <uuid>  # override slate ID
+ *   node scrape-adp.js --output ./out.csv    # custom output path (primary slate only)
+ *   node scrape-adp.js --rankings-id <uuid>  # override the PRIMARY (BBM) slate ID
+ *   node scrape-adp.js --primary-only        # fetch only the BBM slate (legacy behavior)
  *
  * Optional env overrides:
- *   UNDERDOG_SLATE_ID
+ *   UNDERDOG_SLATE_ID                (primary / BBM slate)
+ *   UNDERDOG_ELIMINATOR_SLATE_ID
+ *   UNDERDOG_WEEKLY_SLATE_ID
  *   UNDERDOG_SCORING_TYPE_ID
  *   UNDERDOG_PRODUCT
  *   UNDERDOG_PRODUCT_EXPERIENCE_ID
@@ -39,13 +59,15 @@ import { fileURLToPath } from "node:url";
 // ── Paths ──────────────────────────────────────────────────────────
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
-const ADP_CSV_PATH = resolve(ROOT, "data", "adp.csv");
+const DATA_DIR = resolve(ROOT, "data");
+const ADP_CSV_PATH = resolve(DATA_DIR, "adp.csv");
 const SNAPSHOTS_DIR = resolve(ROOT, "snapshots");
 const SNAPSHOT_TIME_ZONE = process.env.SNAPSHOT_TIME_ZONE || "America/New_York";
 
 // ── CLI flags ──────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes("--dry-run");
+const PRIMARY_ONLY = args.includes("--primary-only");
 const customOutput = (() => {
   const i = args.indexOf("--output");
   return i !== -1 ? args[i + 1] : null;
@@ -68,6 +90,10 @@ const cliStateConfigId = (() => {
 // ── API constants ──────────────────────────────────────────────────
 const SLATE_ID =
   cliSlateId || process.env.UNDERDOG_SLATE_ID || "a9c04e81-1ace-4b16-a31d-4c725a47f16f";
+const ELIMINATOR_SLATE_ID =
+  process.env.UNDERDOG_ELIMINATOR_SLATE_ID || "0ee05b31-f904-4e6e-985b-42f290e3aa3a";
+const WEEKLY_SLATE_ID =
+  process.env.UNDERDOG_WEEKLY_SLATE_ID || "d9fd5f58-393f-400c-a010-3bf79b822b48";
 const SCORING_TYPE =
   process.env.UNDERDOG_SCORING_TYPE_ID || "ccf300b0-9197-5951-bd96-cba84ad71e86";
 const PRODUCT = process.env.UNDERDOG_PRODUCT || "fantasy";
@@ -84,9 +110,23 @@ const query = new URLSearchParams({
   state_config_id: STATE_CONFIG_ID,
 });
 
-const PLAYERS_URL = `https://stats.underdogfantasy.com/v1/slates/${SLATE_ID}/players?${query.toString()}`;
-const APPEARANCES_URL =
-  `https://stats.underdogfantasy.com/v1/slates/${SLATE_ID}/scoring_types/${SCORING_TYPE}/appearances?${query.toString()}`;
+// Slates to scrape. The first entry is the primary (BBM) — its output path is
+// the pipeline-consumed data/adp.csv and honors --output. The player pool is
+// fetched once from the primary slate and reused for all slates: player_id is
+// stable across slates (verified), so appearances join cleanly by player_id.
+const SLATES = [
+  { key: "bbm",        label: "Best Ball Mania / dogs", slateId: SLATE_ID,            csvPath: ADP_CSV_PATH,                              snapshotPrefix: "adp" },
+  { key: "eliminator", label: "The Eliminator",         slateId: ELIMINATOR_SLATE_ID, csvPath: resolve(DATA_DIR, "adp-eliminator.csv"),  snapshotPrefix: "adp-eliminator" },
+  { key: "weekly",     label: "Weekly Winners",         slateId: WEEKLY_SLATE_ID,     csvPath: resolve(DATA_DIR, "adp-weekly.csv"),      snapshotPrefix: "adp-weekly" },
+];
+// --output overrides only the primary slate's path (single-file manual runs).
+if (customOutput) SLATES[0].csvPath = resolve(customOutput);
+const SLATES_TO_RUN = PRIMARY_ONLY ? SLATES.slice(0, 1) : SLATES;
+
+const playersUrl = (slateId) =>
+  `https://stats.underdogfantasy.com/v1/slates/${slateId}/players?${query.toString()}`;
+const appearancesUrl = (slateId) =>
+  `https://stats.underdogfantasy.com/v1/slates/${slateId}/scoring_types/${SCORING_TYPE}/appearances?${query.toString()}`;
 
 const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36";
 
@@ -159,7 +199,13 @@ function resolvePosition(app, player) {
     if (POSITIONS.has(upper)) return upper;
     if (POSITION_FULL_TO_ABBR[upper]) return POSITION_FULL_TO_ABBR[upper];
   }
-  // position_id in player data is a UUID — skip it; it won't match POSITIONS
+  // position_id in player data is a UUID — skip it; it won't match POSITIONS.
+  // NB: we deliberately do NOT fall back to projection.position_rank. Underdog
+  // classifies fullbacks (Juszczyk = "RB102") and other non-fantasy roles in
+  // position_rank, and the established board excludes them by keying off the
+  // player's real position. Every slate's players are present in the shared
+  // BBM player map (verified: zero orphans across BBM/Eliminator/Weekly), so a
+  // rank fallback would rescue nothing but those intended exclusions.
   return "";
 }
 
@@ -297,77 +343,16 @@ async function fetchJson(url, { retries = 3, timeoutMs = 30_000 } = {}) {
   }
 }
 
-// ── Main ───────────────────────────────────────────────────────────
-
-async function main() {
-  console.log("[scraper] Fetching from Underdog Stats API (no auth required)…");
-  console.log(`[scraper]   players     → ${PLAYERS_URL}`);
-  console.log(`[scraper]   appearances → ${APPEARANCES_URL}`);
-
-  const [playersBody, appsBody] = await Promise.all([
-    fetchJson(PLAYERS_URL),
-    fetchJson(APPEARANCES_URL),
-  ]);
-
-  // Prefer explicitly-named arrays over the largest-array heuristic.
-  // The appearances endpoint returns { appearances: [...], players: [...] };
-  // findArray() may pick the wrong (larger) array if we don't name it explicitly.
-  const players     = playersBody.players || playersBody.athletes || findArray(playersBody);
-  const appearances = appsBody.appearances || findArray(appsBody);
-
-  if (!Array.isArray(players)) {
-    throw new Error(`Players response is not an array (got ${typeof players}) — API shape may have changed`);
-  }
-  if (players.length === 0) {
-    throw new Error("Players array is empty — API returned no player data");
-  }
-  if (!Array.isArray(appearances)) {
-    throw new Error(`Appearances response is not an array (got ${typeof appearances}) — API shape may have changed`);
-  }
-  if (appearances.length === 0) {
-    throw new Error("Appearances array is empty — API returned no appearance data");
-  }
-
-  // Build teamId → abbreviation map from the teams array returned alongside players.
-  // Common shapes: { id, abbreviation } or { id, abbr } or { id, short_name }.
-  const teamAbbrMap = new Map();
-  const teamsArray = playersBody.teams || playersBody.nfl_teams || [];
-  for (const t of teamsArray) {
-    const id = t.id;
-    const abbr = t.abbreviation || t.abbr || t.short_name || t.name || "";
-    if (id && abbr) teamAbbrMap.set(String(id), String(abbr));
-  }
-  if (teamAbbrMap.size > 0) {
-    console.log(`[scraper] Built team map with ${teamAbbrMap.size} teams`);
-  }
-
-  console.log(`[scraper] Received ${players.length} players, ${appearances.length} appearances`);
-
-  if (players.length > 0) {
-    console.log("[scraper] Players sample keys:", Object.keys(players[0]).join(", "));
-  }
-  if (appearances.length > 0) {
-    console.log("[scraper] Appearances sample keys:", Object.keys(appearances[0]).join(", "));
-  }
-
-  // Build player map: id → player object
-  const playerMap = new Map();
-  for (const p of players) {
-    const id = pick(p, "id", "player_id", "playerId");
-    if (id) playerMap.set(String(id), p);
-  }
-
-  // Merge appearances with player data
+/** Merge a slate's appearances against the shared player/team maps → CSV rows. */
+function mergeRows(appearances, playerMap, teamAbbrMap) {
   const rows = [];
   for (const app of appearances) {
-    // appearances.player_id joins to players.id
-    // appearances.id may be an integer rank (1, 2, …) — use player_id as the canonical row UUID
+    // appearances.player_id joins to players.id (stable across slates).
     const playerId = String(app.player_id || app.playerId || "");
     if (!playerId) continue;
 
     // Use the player UUID as the row id so downstream consumers can match by player
     const rowId = playerId;
-
     const player = playerMap.get(playerId) || {};
 
     const firstName      = pick(player, "first_name", "firstName");
@@ -375,15 +360,16 @@ async function main() {
     const fullName       = `${firstName} ${lastName}`.trim();
     const position       = PLAYER_POSITION_OVERRIDES[fullName] || resolvePosition(app, player);
     if (!POSITIONS.has(position)) continue;
-    // Resolve team abbreviation: prefer explicit name fields, then look up team_id in the
-    // teams array returned by the players endpoint, then try the hardcoded UUID map,
-    // then fall back to team_id as-is.
-    const rawTeamId      = pick(player, "team_id", "teamId");
+    // Resolve team abbreviation: prefer explicit name fields, then look up team_id
+    // (from the player, or the appearance itself for players missing from the map)
+    // in the teams array, then the hardcoded UUID map, then fall back to the id.
+    const rawTeamId      = pick(player, "team_id", "teamId") || app.team_id || "";
     const teamName       = pick(player, "team_name", "teamName", "team") ||
                            (rawTeamId ? teamAbbrMap.get(String(rawTeamId)) || TEAM_UUID_TO_ABBREV[String(rawTeamId)] || rawTeamId : "");
     const adp            = resolveAdp(app);
     const projectedPts   = resolveProjection(app);
-    const positionRank   = pick(app, "position_rank", "positionRank", "rank");
+    const positionRank   = pick(app, "position_rank", "positionRank", "rank") ||
+                           (app.projection && app.projection.position_rank) || "";
 
     rows.push([rowId, firstName, lastName, adp, projectedPts, positionRank, position, teamName, "", ""]);
   }
@@ -395,34 +381,103 @@ async function main() {
     return aAdp - bAdp;
   });
 
-  if (rows.length < MIN_EXPECTED_ROWS) {
-    throw new Error(
-      `Only ${rows.length} player rows after merge — expected ${MIN_EXPECTED_ROWS}+. ` +
-      "Check the sample keys logged above and adjust field resolution if needed."
-    );
+  return rows;
+}
+
+/** Serialize rows to the pipeline CSV string. */
+function rowsToCsv(rows) {
+  return CSV_HEADER + "\n" + rows.map((r) => r.map(csvQuote).join(",")).join("\n") + "\n";
+}
+
+// ── Main ───────────────────────────────────────────────────────────
+
+async function main() {
+  console.log("[scraper] Fetching from Underdog Stats API (no auth required)…");
+  console.log(`[scraper]   ${SLATES_TO_RUN.length} slate(s): ${SLATES_TO_RUN.map((s) => s.key).join(", ")}`);
+
+  // Player pool + team map are fetched ONCE from the primary slate and reused
+  // for every slate (player_id is stable across slates). The appearances call
+  // is what differs per slate — it carries the slate-specific ADP.
+  const playersBody = await fetchJson(playersUrl(SLATE_ID));
+  const players = playersBody.players || playersBody.athletes || findArray(playersBody);
+
+  if (!Array.isArray(players)) {
+    throw new Error(`Players response is not an array (got ${typeof players}) — API shape may have changed`);
+  }
+  if (players.length === 0) {
+    throw new Error("Players array is empty — API returned no player data");
   }
 
-  const csv =
-    CSV_HEADER + "\n" +
-    rows.map((r) => r.map(csvQuote).join(",")).join("\n") + "\n";
-
-  console.log(`[scraper] Merged ${rows.length} players`);
-
-  if (DRY_RUN) {
-    console.log("[scraper] Dry run — skipping file writes");
-    console.log(csv.split("\n").slice(0, 6).join("\n"));
-    return;
+  // Build teamId → abbreviation map from the teams array returned alongside players.
+  const teamAbbrMap = new Map();
+  const teamsArray = playersBody.teams || playersBody.nfl_teams || [];
+  for (const t of teamsArray) {
+    const id = t.id;
+    const abbr = t.abbreviation || t.abbr || t.short_name || t.name || "";
+    if (id && abbr) teamAbbrMap.set(String(id), String(abbr));
+  }
+  if (teamAbbrMap.size > 0) {
+    console.log(`[scraper] Built team map with ${teamAbbrMap.size} teams`);
   }
 
-  const outPath = customOutput || ADP_CSV_PATH;
-  writeFileSync(outPath, csv, "utf8");
-  console.log(`[scraper] Wrote ${outPath}`);
+  // Build player map: id → player object
+  const playerMap = new Map();
+  for (const p of players) {
+    const id = pick(p, "id", "player_id", "playerId");
+    if (id) playerMap.set(String(id), p);
+  }
+  console.log(`[scraper] Received ${players.length} players`);
+  console.log("[scraper] Players sample keys:", Object.keys(players[0]).join(", "));
 
-  mkdirSync(SNAPSHOTS_DIR, { recursive: true });
   const date = snapshotDateInTimeZone();
-  const snapshotPath = resolve(SNAPSHOTS_DIR, `adp_${date}.csv`);
-  writeFileSync(snapshotPath, csv, "utf8");
-  console.log(`[scraper] Wrote snapshot ${snapshotPath} (${SNAPSHOT_TIME_ZONE})`);
+  let anyWritten = false;
+
+  for (const slate of SLATES_TO_RUN) {
+    console.log(`\n[scraper] === ${slate.label} (${slate.key}) ===`);
+    console.log(`[scraper]   appearances → ${appearancesUrl(slate.slateId)}`);
+
+    const appsBody = await fetchJson(appearancesUrl(slate.slateId));
+    const appearances = appsBody.appearances || findArray(appsBody);
+    if (!Array.isArray(appearances)) {
+      throw new Error(`[${slate.key}] Appearances response is not an array (got ${typeof appearances}) — API shape may have changed`);
+    }
+    if (appearances.length === 0) {
+      throw new Error(`[${slate.key}] Appearances array is empty — API returned no appearance data`);
+    }
+    console.log(`[scraper]   ${appearances.length} appearances; sample keys: ${Object.keys(appearances[0]).join(", ")}`);
+
+    const rows = mergeRows(appearances, playerMap, teamAbbrMap);
+    if (rows.length < MIN_EXPECTED_ROWS) {
+      throw new Error(
+        `[${slate.key}] Only ${rows.length} player rows after merge — expected ${MIN_EXPECTED_ROWS}+. ` +
+        "Check the sample keys logged above and adjust field resolution if needed."
+      );
+    }
+    const priced = rows.filter((r) => r[3] !== "").length;
+    console.log(`[scraper]   Merged ${rows.length} players (${priced} with ADP)`);
+
+    const csv = rowsToCsv(rows);
+
+    if (DRY_RUN) {
+      console.log(`[scraper]   Dry run — skipping writes for ${slate.key}`);
+      console.log(csv.split("\n").slice(0, 4).join("\n"));
+      continue;
+    }
+
+    mkdirSync(DATA_DIR, { recursive: true });
+    writeFileSync(slate.csvPath, csv, "utf8");
+    console.log(`[scraper]   Wrote ${slate.csvPath}`);
+
+    mkdirSync(SNAPSHOTS_DIR, { recursive: true });
+    const snapshotPath = resolve(SNAPSHOTS_DIR, `${slate.snapshotPrefix}_${date}.csv`);
+    writeFileSync(snapshotPath, csv, "utf8");
+    console.log(`[scraper]   Wrote snapshot ${snapshotPath} (${SNAPSHOT_TIME_ZONE})`);
+    anyWritten = true;
+  }
+
+  if (!DRY_RUN && anyWritten) {
+    console.log(`\n[scraper] Done — ${SLATES_TO_RUN.length} slate(s) written for ${date}.`);
+  }
 }
 
 main().catch((err) => {

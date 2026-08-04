@@ -26,7 +26,12 @@ jobs:
       - name: Run ADP scraper
         working-directory: scraper
         env:
+          # Primary (BBM) slate — also the slate the entire dog family shares.
           UNDERDOG_SLATE_ID: a9c04e81-1ace-4b16-a31d-4c725a47f16f
+          # Format-specific slates (their ADP diverges from BBM). If ADP ever
+          # looks stale, re-derive these from api.underdogfantasy.com/v2/lobby.
+          UNDERDOG_ELIMINATOR_SLATE_ID: 0ee05b31-f904-4e6e-985b-42f290e3aa3a
+          UNDERDOG_WEEKLY_SLATE_ID: d9fd5f58-393f-400c-a010-3bf79b822b48
           UNDERDOG_SCORING_TYPE_ID: ccf300b0-9197-5951-bd96-cba84ad71e86
           UNDERDOG_PRODUCT: fantasy
           UNDERDOG_PRODUCT_EXPERIENCE_ID: 018e1234-5678-9abc-def0-123456789002
@@ -34,13 +39,27 @@ jobs:
         run: node scrape-adp.js
 
       - name: Build adp.json from CSV
+        # BBM only — the extension's canonical ADP anchor. The Eliminator /
+        # Weekly CSVs are committed as raw per-format ADP for the downstream
+        # per-tournament anchor build (not consumed yet).
         run: node scripts/build-adp-json.cjs
 
       - name: Check for changes
         id: changes
         run: |
-          git add -N adp.json data/adp.csv snapshots/
-          git diff --quiet adp.json data/adp.csv && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+          git add -N adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
+          # Commit if ANY format's ADP changed (alt formats can move on a day BBM is static).
+          if git diff --quiet adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+          # Trigger the data platform only when the BBM anchor it consumes changed.
+          if git diff --quiet adp.json data/adp.csv; then
+            echo "bbm_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "bbm_changed=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Commit and push updated ADP data
         if: steps.changes.outputs.changed == 'true'
@@ -48,12 +67,12 @@ jobs:
           git config user.name "rosterOS"
           git config user.email "noreply@rosteros.app"
           DATE=$(date -u +%Y-%m-%d)
-          git add adp.json data/adp.csv snapshots/
+          git add adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
           git commit -m "sync adp ${DATE}"
           git push
 
       - name: Trigger data platform sync
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.bbm_changed == 'true'
         run: |
           curl -s -o /dev/null -w "%{http_code}" \
             -X POST \
