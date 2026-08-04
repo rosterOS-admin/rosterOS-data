@@ -39,17 +39,21 @@ jobs:
         run: node scrape-adp.js
 
       - name: Build adp.json from CSV
-        # BBM only — the extension's canonical ADP anchor. The Eliminator /
-        # Weekly CSVs are committed as raw per-format ADP for the downstream
-        # per-tournament anchor build (not consumed yet).
+        # BBM only — the extension's canonical ADP anchor.
         run: node scripts/build-adp-json.cjs
+
+      - name: Build per-tournament ADP overlays
+        # Compact { player_id: adp } overlays for the Eliminator / Weekly slates.
+        # The extension swaps its ADP anchor to these when it detects a
+        # non-default tournament archetype.
+        run: node scripts/build-adp-overlays.cjs
 
       - name: Check for changes
         id: changes
         run: |
-          git add -N adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
+          git add -N adp.json adp-eliminator.json adp-weekly.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
           # Commit if ANY format's ADP changed (alt formats can move on a day BBM is static).
-          if git diff --quiet adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv; then
+          if git diff --quiet adp.json adp-eliminator.json adp-weekly.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -67,7 +71,7 @@ jobs:
           git config user.name "rosterOS"
           git config user.email "noreply@rosteros.app"
           DATE=$(date -u +%Y-%m-%d)
-          git add adp.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
+          git add adp.json adp-eliminator.json adp-weekly.json data/adp.csv data/adp-eliminator.csv data/adp-weekly.csv snapshots/
           git commit -m "sync adp ${DATE}"
           git push
 
