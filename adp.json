@@ -4130,6 +4130,16 @@
     "byeWeek": ""
   },
   {
+    "id": "ba7b2314-4960-4da1-a791-9b3fe86ad646",
+    "name": "Ricky Pearsall",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "",
+    "position": "WR",
+    "team": "SF",
+    "byeWeek": ""
+  },
+  {
     "id": "f5106453-fc94-4ffb-b843-cb5b15cdb4dd",
     "name": "Jerome Ford",
     "adp": null,
@@ -11707,16 +11717,6 @@
     "positionRank": "",
     "position": "WR",
     "team": "",
-    "byeWeek": ""
-  },
-  {
-    "id": "ba7b2314-4960-4da1-a791-9b3fe86ad646",
-    "name": "Ricky Pearsall",
-    "adp": null,
-    "projectedPoints": 0,
-    "positionRank": "",
-    "position": "WR",
-    "team": "SF",
     "byeWeek": ""
   },
   {
