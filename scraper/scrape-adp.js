@@ -52,7 +52,7 @@
  *   SNAPSHOT_TIME_ZONE               # defaults to America/New_York
  */
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -61,6 +61,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const DATA_DIR = resolve(ROOT, "data");
 const ADP_CSV_PATH = resolve(DATA_DIR, "adp.csv");
+const ADP_OVERRIDES_PATH = resolve(DATA_DIR, "adp-overrides.json");
 const SNAPSHOTS_DIR = resolve(ROOT, "snapshots");
 const SNAPSHOT_TIME_ZONE = process.env.SNAPSHOT_TIME_ZONE || "America/New_York";
 
@@ -343,9 +344,46 @@ async function fetchJson(url, { retries = 3, timeoutMs = 30_000 } = {}) {
   }
 }
 
+/**
+ * Load the manual ADP override map (data/adp-overrides.json).
+ *
+ * Applied on EVERY scrape run so the daily job can't revert it: Underdog reports
+ * "-" (no market) for players it has pulled from the board, which lands as a null
+ * ADP downstream — that breaks the extension's CLV math and freezes the data
+ * visualizer's ADP-history line at the player's last real value. An override
+ * forces a sentinel ADP (216 = one past the pool bottom, "effectively undrafted").
+ *
+ * Returns a normalized map { playerId: { adp:number, firstName?, lastName?,
+ * position?, team? } }. Keys starting with "_" (e.g. "_note") are ignored, and a
+ * bare-number value is accepted as shorthand for { adp: <number> }.
+ */
+function loadAdpOverrides() {
+  if (!existsSync(ADP_OVERRIDES_PATH)) return {};
+  let raw;
+  try {
+    raw = JSON.parse(readFileSync(ADP_OVERRIDES_PATH, "utf8"));
+  } catch (err) {
+    // A malformed override file must not silently drop overrides — fail loud.
+    throw new Error(`Failed to parse ${ADP_OVERRIDES_PATH}: ${err.message}`);
+  }
+  const src = raw && typeof raw.overrides === "object" ? raw.overrides : raw;
+  const out = {};
+  for (const [id, val] of Object.entries(src || {})) {
+    if (id.startsWith("_")) continue;
+    const entry = typeof val === "number" ? { adp: val } : val;
+    if (entry && typeof entry.adp === "number" && Number.isFinite(entry.adp)) {
+      out[id] = entry;
+    } else {
+      console.warn(`[scraper] Ignoring override for ${id}: no finite numeric "adp"`);
+    }
+  }
+  return out;
+}
+
 /** Merge a slate's appearances against the shared player/team maps → CSV rows. */
-function mergeRows(appearances, playerMap, teamAbbrMap) {
+function mergeRows(appearances, playerMap, teamAbbrMap, overrides = {}) {
   const rows = [];
+  const overriddenSeen = new Set();
   for (const app of appearances) {
     // appearances.player_id joins to players.id (stable across slates).
     const playerId = String(app.player_id || app.playerId || "");
@@ -366,12 +404,39 @@ function mergeRows(appearances, playerMap, teamAbbrMap) {
     const rawTeamId      = pick(player, "team_id", "teamId") || app.team_id || "";
     const teamName       = pick(player, "team_name", "teamName", "team") ||
                            (rawTeamId ? teamAbbrMap.get(String(rawTeamId)) || TEAM_UUID_TO_ABBREV[String(rawTeamId)] || rawTeamId : "");
-    const adp            = resolveAdp(app);
+    // A manual override forces the ADP (e.g. a player Underdog has pulled from the
+    // board), replacing whatever "-"/value the API returned. Everything else on the
+    // row stays live.
+    const override       = overrides[playerId];
+    const adp            = override ? override.adp : resolveAdp(app);
+    if (override) overriddenSeen.add(playerId);
     const projectedPts   = resolveProjection(app);
     const positionRank   = pick(app, "position_rank", "positionRank", "rank") ||
                            (app.projection && app.projection.position_rank) || "";
 
     rows.push([rowId, firstName, lastName, adp, projectedPts, positionRank, position, teamName, "", ""]);
+  }
+
+  // Overridden players that dropped out of appearances entirely (Underdog fully
+  // de-listed them) still need a sentinel row, or CLV math and the ADP-history
+  // line would silently lose them again. Synthesize from the player pool, falling
+  // back to the override file's own name/team/position fields.
+  for (const [playerId, ov] of Object.entries(overrides)) {
+    if (overriddenSeen.has(playerId)) continue;
+    const player    = playerMap.get(playerId) || {};
+    const firstName = pick(player, "first_name", "firstName") || ov.firstName || "";
+    const lastName  = pick(player, "last_name", "lastName") || ov.lastName || "";
+    const fullName  = `${firstName} ${lastName}`.trim();
+    const position  = PLAYER_POSITION_OVERRIDES[fullName] || resolvePosition({}, player) || ov.position || "";
+    if (!POSITIONS.has(position)) {
+      console.warn(`[scraper] Override ${playerId} absent from appearances and has no resolvable position — skipping synthesized row`);
+      continue;
+    }
+    const rawTeamId = pick(player, "team_id", "teamId") || "";
+    const teamName  = pick(player, "team_name", "teamName", "team") ||
+                      (rawTeamId ? teamAbbrMap.get(String(rawTeamId)) || TEAM_UUID_TO_ABBREV[String(rawTeamId)] || rawTeamId : "") ||
+                      ov.team || "";
+    rows.push([playerId, firstName, lastName, ov.adp, 0, "", position, teamName, "", ""]);
   }
 
   // Sort ascending by ADP; players with no ADP go last
@@ -429,6 +494,14 @@ async function main() {
   console.log(`[scraper] Received ${players.length} players`);
   console.log("[scraper] Players sample keys:", Object.keys(players[0]).join(", "));
 
+  // Manual ADP overrides (e.g. players Underdog has pulled from the board) —
+  // re-applied every run to all slates so the daily scrape can't revert them.
+  const adpOverrides = loadAdpOverrides();
+  const overrideCount = Object.keys(adpOverrides).length;
+  if (overrideCount > 0) {
+    console.log(`[scraper] Loaded ${overrideCount} manual ADP override(s) from ${ADP_OVERRIDES_PATH}`);
+  }
+
   const date = snapshotDateInTimeZone();
   let anyWritten = false;
 
@@ -446,7 +519,7 @@ async function main() {
     }
     console.log(`[scraper]   ${appearances.length} appearances; sample keys: ${Object.keys(appearances[0]).join(", ")}`);
 
-    const rows = mergeRows(appearances, playerMap, teamAbbrMap);
+    const rows = mergeRows(appearances, playerMap, teamAbbrMap, adpOverrides);
     if (rows.length < MIN_EXPECTED_ROWS) {
       throw new Error(
         `[${slate.key}] Only ${rows.length} player rows after merge — expected ${MIN_EXPECTED_ROWS}+. ` +

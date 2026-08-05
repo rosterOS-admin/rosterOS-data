@@ -1,0 +1,11 @@
+{
+  "_note": "Manual ADP overrides applied by scraper/scrape-adp.js on EVERY run, so the daily Underdog scrape can't revert them. Underdog reports '-' (no market) for players it has pulled from the board; that null breaks the extension's CLV math and freezes the data-visualizer's ADP-history line at the player's last real value. We force a sentinel ADP = 216 (one past the 216-pick pool bottom = 'effectively undrafted') so CLV computes and the history line shows the drop. The override is applied to all three slates (BBM / Eliminator / Weekly). Remove a player's entry once Underdog restores a real ADP. Keys are Underdog player_id (same id used in adp.json). Value may be a bare number or an object { adp, firstName, lastName, position, team, reason }; the name/position/team fields are only used to synthesize a row if Underdog drops the player from appearances entirely.",
+  "ba7b2314-4960-4da1-a791-9b3fe86ad646": {
+    "adp": 216,
+    "firstName": "Ricky",
+    "lastName": "Pearsall",
+    "position": "WR",
+    "team": "SF",
+    "reason": "Pulled from UD board 2026-08-02 (injury). Last real ADP 119.1 on 2026-08-01."
+  }
+}
