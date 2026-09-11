@@ -3930,6 +3930,16 @@
     "byeWeek": ""
   },
   {
+    "id": "cb617be8-3a77-4496-9077-1bfdeebcc88d",
+    "name": "Chip Trayanum",
+    "adp": 216,
+    "projectedPoints": 4.1,
+    "positionRank": "RB102",
+    "position": "RB",
+    "team": "NYJ",
+    "byeWeek": ""
+  },
+  {
     "id": "f972b7ae-d069-4104-83ea-5c5654a1daf5",
     "name": "Dyami Brown",
     "adp": 216,
@@ -4057,16 +4067,6 @@
     "positionRank": "QB49",
     "position": "QB",
     "team": "DAL",
-    "byeWeek": ""
-  },
-  {
-    "id": "cb617be8-3a77-4496-9077-1bfdeebcc88d",
-    "name": "Chip Trayanum",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "RB102",
-    "position": "RB",
-    "team": "NYJ",
     "byeWeek": ""
   },
   {
@@ -4320,16 +4320,6 @@
     "byeWeek": ""
   },
   {
-    "id": "366a4240-0e93-4773-975f-d9db4fe583f1",
-    "name": "Tanner McKee",
-    "adp": null,
-    "projectedPoints": 9.3,
-    "positionRank": "",
-    "position": "QB",
-    "team": "PHI",
-    "byeWeek": ""
-  },
-  {
     "id": "1b1dae18-5051-40d8-8bdd-0e992a9ec001",
     "name": "Tip Reiman",
     "adp": null,
@@ -4337,6 +4327,16 @@
     "positionRank": "",
     "position": "TE",
     "team": "ARI",
+    "byeWeek": ""
+  },
+  {
+    "id": "366a4240-0e93-4773-975f-d9db4fe583f1",
+    "name": "Tanner McKee",
+    "adp": null,
+    "projectedPoints": 9.3,
+    "positionRank": "",
+    "position": "QB",
+    "team": "PHI",
     "byeWeek": ""
   },
   {
@@ -4500,16 +4500,6 @@
     "byeWeek": ""
   },
   {
-    "id": "325e2a23-0198-4f55-bcba-44d63cdaf314",
-    "name": "Seydou Traore",
-    "adp": null,
-    "projectedPoints": 5.7,
-    "positionRank": "",
-    "position": "TE",
-    "team": "MIA",
-    "byeWeek": ""
-  },
-  {
     "id": "d09fb0f8-e30b-4d7a-8a17-fb9a224f9476",
     "name": "Payne Durham",
     "adp": null,
@@ -4517,6 +4507,16 @@
     "positionRank": "",
     "position": "TE",
     "team": "TB",
+    "byeWeek": ""
+  },
+  {
+    "id": "325e2a23-0198-4f55-bcba-44d63cdaf314",
+    "name": "Seydou Traore",
+    "adp": null,
+    "projectedPoints": 5.7,
+    "positionRank": "",
+    "position": "TE",
+    "team": "MIA",
     "byeWeek": ""
   },
   {
@@ -4530,16 +4530,6 @@
     "byeWeek": ""
   },
   {
-    "id": "e0cee736-2dcd-457c-8c87-00dc56bb6856",
-    "name": "Ronnie Rivers",
-    "adp": null,
-    "projectedPoints": 5.1,
-    "positionRank": "",
-    "position": "RB",
-    "team": "LAR",
-    "byeWeek": ""
-  },
-  {
     "id": "52aa4523-7aa1-4310-9fd3-7cea1cbd5931",
     "name": "Tylan Wallace",
     "adp": null,
@@ -4547,6 +4537,16 @@
     "positionRank": "",
     "position": "WR",
     "team": "CLE",
+    "byeWeek": ""
+  },
+  {
+    "id": "e0cee736-2dcd-457c-8c87-00dc56bb6856",
+    "name": "Ronnie Rivers",
+    "adp": null,
+    "projectedPoints": 5.1,
+    "positionRank": "",
+    "position": "RB",
+    "team": "LAR",
     "byeWeek": ""
   },
   {
@@ -5396,7 +5396,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "MIN",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -5921,12 +5921,12 @@
   },
   {
     "id": "086e6ffa-de72-4937-9046-9d89c7830ed3",
-    "name": "Nathan Carter",
+    "name": "Nate Carter",
     "adp": null,
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "KC",
     "byeWeek": ""
   },
   {
@@ -6296,7 +6296,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "MIA",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -7576,7 +7576,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "IND",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -9146,7 +9146,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "MIN",
     "byeWeek": ""
   },
   {
@@ -9216,7 +9216,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "MIA",
     "byeWeek": ""
   },
   {
@@ -9696,7 +9696,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "MIA",
     "byeWeek": ""
   },
   {
@@ -10516,7 +10516,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "MIA",
     "byeWeek": ""
   },
   {
