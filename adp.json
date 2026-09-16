@@ -3310,16 +3310,6 @@
     "byeWeek": ""
   },
   {
-    "id": "27752b82-b3bd-4ccb-a5d3-8dbb8814dd35",
-    "name": "Robert Lewis",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR132",
-    "position": "WR",
-    "team": "",
-    "byeWeek": ""
-  },
-  {
     "id": "9d9fe379-f313-4c5e-8501-063f7f4d4907",
     "name": "Noah Brown",
     "adp": 216,
@@ -3327,6 +3317,16 @@
     "positionRank": "WR132",
     "position": "WR",
     "team": "WAS",
+    "byeWeek": ""
+  },
+  {
+    "id": "27752b82-b3bd-4ccb-a5d3-8dbb8814dd35",
+    "name": "Robert Lewis",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR132",
+    "position": "WR",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -3400,16 +3400,6 @@
     "byeWeek": ""
   },
   {
-    "id": "fc901d7a-b7d6-45cb-9b1a-82af2a920719",
-    "name": "Jimmy Horn",
-    "adp": 216,
-    "projectedPoints": 26.2,
-    "positionRank": "WR142",
-    "position": "WR",
-    "team": "CAR",
-    "byeWeek": ""
-  },
-  {
     "id": "83e72a8e-fb32-4450-bf5a-04070626c19e",
     "name": "Tai Felton",
     "adp": 216,
@@ -3470,16 +3460,6 @@
     "byeWeek": ""
   },
   {
-    "id": "df8225e2-d641-4d0b-823f-f9090ea21292",
-    "name": "Tyson Bagent",
-    "adp": 216,
-    "projectedPoints": 9,
-    "positionRank": "QB44",
-    "position": "QB",
-    "team": "CHI",
-    "byeWeek": ""
-  },
-  {
     "id": "74f06d39-483d-42ba-b7df-d1612602ac66",
     "name": "Ty Simpson",
     "adp": 216,
@@ -3487,6 +3467,16 @@
     "positionRank": "QB44",
     "position": "QB",
     "team": "LAR",
+    "byeWeek": ""
+  },
+  {
+    "id": "df8225e2-d641-4d0b-823f-f9090ea21292",
+    "name": "Tyson Bagent",
+    "adp": 216,
+    "projectedPoints": 9,
+    "positionRank": "QB44",
+    "position": "QB",
+    "team": "CHI",
     "byeWeek": ""
   },
   {
@@ -3580,6 +3570,16 @@
     "byeWeek": ""
   },
   {
+    "id": "153696a9-1fbb-4205-b382-2813daac42df",
+    "name": "Nick Westbrook-Ikhine",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR142",
+    "position": "WR",
+    "team": "IND",
+    "byeWeek": ""
+  },
+  {
     "id": "eec7c936-d768-4635-9c46-d3c68d0e0616",
     "name": "Jordan Watkins",
     "adp": 216,
@@ -3590,13 +3590,13 @@
     "byeWeek": ""
   },
   {
-    "id": "153696a9-1fbb-4205-b382-2813daac42df",
-    "name": "Nick Westbrook-Ikhine",
+    "id": "fc901d7a-b7d6-45cb-9b1a-82af2a920719",
+    "name": "Jimmy Horn",
     "adp": 216,
     "projectedPoints": 0,
     "positionRank": "WR142",
     "position": "WR",
-    "team": "IND",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -3980,8 +3980,158 @@
     "byeWeek": ""
   },
   {
+    "id": "ccc6bb24-a809-4722-ad5f-9946dad7d06d",
+    "name": "Kyle McCord",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "QB49",
+    "position": "QB",
+    "team": "MIA",
+    "byeWeek": ""
+  },
+  {
+    "id": "f03bee15-39cc-4f13-9e8d-072887c6a371",
+    "name": "Brycen Tremayne",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "CAR",
+    "byeWeek": ""
+  },
+  {
+    "id": "e3933362-2750-427e-80d1-70d150296830",
+    "name": "Myles Price",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "MIN",
+    "byeWeek": ""
+  },
+  {
+    "id": "f03c4ce7-ce1d-4ebe-aa83-333226706eca",
+    "name": "Trey Benson",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "RB102",
+    "position": "RB",
+    "team": "ARI",
+    "byeWeek": ""
+  },
+  {
+    "id": "7c0893a1-8af4-430b-9b4e-d3e1e47cb5b4",
+    "name": "Laquon Treadwell",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "IND",
+    "byeWeek": ""
+  },
+  {
+    "id": "252b01c1-2bde-4112-bbfb-6440ade9258d",
+    "name": "Cedric Tillman",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "NO",
+    "byeWeek": ""
+  },
+  {
     "id": "3dbfc6a5-897d-40fd-abfb-f36db25da8e6",
     "name": "Devin Neal",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "RB102",
+    "position": "RB",
+    "team": "",
+    "byeWeek": ""
+  },
+  {
+    "id": "eb3931e1-de43-45ad-986f-b8222a838fd1",
+    "name": "Sam Howell",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "QB49",
+    "position": "QB",
+    "team": "DAL",
+    "byeWeek": ""
+  },
+  {
+    "id": "07641bfd-1cc2-4c66-87cf-1949764e11b9",
+    "name": "J. Michael Sturdivant",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "GB",
+    "byeWeek": ""
+  },
+  {
+    "id": "ac8d73bb-7129-4ebe-865d-851a3ccc90ad",
+    "name": "Salvon Ahmed",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "RB102",
+    "position": "RB",
+    "team": "CHI",
+    "byeWeek": ""
+  },
+  {
+    "id": "b6fc1eff-ec88-4523-9656-d9fd6b53a7ff",
+    "name": "Ezekiel Elliott",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "RB102",
+    "position": "RB",
+    "team": "DAL",
+    "byeWeek": ""
+  },
+  {
+    "id": "a2f6d787-e95e-4674-9cbd-9e68b8bf2140",
+    "name": "Jack Strand",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "QB49",
+    "position": "QB",
+    "team": "ATL",
+    "byeWeek": ""
+  },
+  {
+    "id": "92cde727-0995-4804-911c-ecea076fd7c1",
+    "name": "Xavier Restrepo",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "WR153",
+    "position": "WR",
+    "team": "TEN",
+    "byeWeek": ""
+  },
+  {
+    "id": "7b6a4f58-122e-45c0-bf23-d862552ba221",
+    "name": "Stetson Bennett",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "QB49",
+    "position": "QB",
+    "team": "LAR",
+    "byeWeek": ""
+  },
+  {
+    "id": "ad3eff63-980d-4fb9-9260-311480d0d8d0",
+    "name": "Joe Milton",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "QB49",
+    "position": "QB",
+    "team": "DAL",
+    "byeWeek": ""
+  },
+  {
+    "id": "19f3df7d-99f9-4555-8e03-a4afd3fa8c49",
+    "name": "Joe Mixon",
     "adp": 216,
     "projectedPoints": 0,
     "positionRank": "RB102",
@@ -3997,156 +4147,6 @@
     "positionRank": "WR153",
     "position": "WR",
     "team": "",
-    "byeWeek": ""
-  },
-  {
-    "id": "e3933362-2750-427e-80d1-70d150296830",
-    "name": "Myles Price",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "MIN",
-    "byeWeek": ""
-  },
-  {
-    "id": "7b6a4f58-122e-45c0-bf23-d862552ba221",
-    "name": "Stetson Bennett",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "QB49",
-    "position": "QB",
-    "team": "LAR",
-    "byeWeek": ""
-  },
-  {
-    "id": "f03c4ce7-ce1d-4ebe-aa83-333226706eca",
-    "name": "Trey Benson",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "RB102",
-    "position": "RB",
-    "team": "ARI",
-    "byeWeek": ""
-  },
-  {
-    "id": "92cde727-0995-4804-911c-ecea076fd7c1",
-    "name": "Xavier Restrepo",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "TEN",
-    "byeWeek": ""
-  },
-  {
-    "id": "a2f6d787-e95e-4674-9cbd-9e68b8bf2140",
-    "name": "Jack Strand",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "QB49",
-    "position": "QB",
-    "team": "ATL",
-    "byeWeek": ""
-  },
-  {
-    "id": "f03bee15-39cc-4f13-9e8d-072887c6a371",
-    "name": "Brycen Tremayne",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "CAR",
-    "byeWeek": ""
-  },
-  {
-    "id": "b6fc1eff-ec88-4523-9656-d9fd6b53a7ff",
-    "name": "Ezekiel Elliott",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "RB102",
-    "position": "RB",
-    "team": "DAL",
-    "byeWeek": ""
-  },
-  {
-    "id": "ad3eff63-980d-4fb9-9260-311480d0d8d0",
-    "name": "Joe Milton",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "QB49",
-    "position": "QB",
-    "team": "DAL",
-    "byeWeek": ""
-  },
-  {
-    "id": "7c0893a1-8af4-430b-9b4e-d3e1e47cb5b4",
-    "name": "Laquon Treadwell",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "IND",
-    "byeWeek": ""
-  },
-  {
-    "id": "19f3df7d-99f9-4555-8e03-a4afd3fa8c49",
-    "name": "Joe Mixon",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "RB102",
-    "position": "RB",
-    "team": "",
-    "byeWeek": ""
-  },
-  {
-    "id": "ac8d73bb-7129-4ebe-865d-851a3ccc90ad",
-    "name": "Salvon Ahmed",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "RB102",
-    "position": "RB",
-    "team": "CHI",
-    "byeWeek": ""
-  },
-  {
-    "id": "252b01c1-2bde-4112-bbfb-6440ade9258d",
-    "name": "Cedric Tillman",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "NO",
-    "byeWeek": ""
-  },
-  {
-    "id": "07641bfd-1cc2-4c66-87cf-1949764e11b9",
-    "name": "J. Michael Sturdivant",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR153",
-    "position": "WR",
-    "team": "GB",
-    "byeWeek": ""
-  },
-  {
-    "id": "eb3931e1-de43-45ad-986f-b8222a838fd1",
-    "name": "Sam Howell",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "QB49",
-    "position": "QB",
-    "team": "DAL",
-    "byeWeek": ""
-  },
-  {
-    "id": "ccc6bb24-a809-4722-ad5f-9946dad7d06d",
-    "name": "Kyle McCord",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "QB49",
-    "position": "QB",
-    "team": "MIA",
     "byeWeek": ""
   },
   {
@@ -4360,16 +4360,6 @@
     "byeWeek": ""
   },
   {
-    "id": "38917e20-0ef1-401e-89ee-c42ca307cc3a",
-    "name": "Brevyn Spann-Ford",
-    "adp": null,
-    "projectedPoints": 8.9,
-    "positionRank": "",
-    "position": "TE",
-    "team": "DAL",
-    "byeWeek": ""
-  },
-  {
     "id": "95c6a77b-e53f-46ec-adfe-ffba1ed6c4cf",
     "name": "Grant Calcaterra",
     "adp": null,
@@ -4377,6 +4367,16 @@
     "positionRank": "",
     "position": "TE",
     "team": "PHI",
+    "byeWeek": ""
+  },
+  {
+    "id": "38917e20-0ef1-401e-89ee-c42ca307cc3a",
+    "name": "Brevyn Spann-Ford",
+    "adp": null,
+    "projectedPoints": 8.9,
+    "positionRank": "",
+    "position": "TE",
+    "team": "DAL",
     "byeWeek": ""
   },
   {
@@ -4430,6 +4430,16 @@
     "byeWeek": ""
   },
   {
+    "id": "0bc2e7fa-b5e5-4570-9709-0fdeb1ab5884",
+    "name": "Davis Allen",
+    "adp": null,
+    "projectedPoints": 7.9,
+    "positionRank": "",
+    "position": "TE",
+    "team": "LAR",
+    "byeWeek": ""
+  },
+  {
     "id": "221181bd-e4ef-4380-899e-7b2a6aae962b",
     "name": "Josh Cuevas",
     "adp": null,
@@ -4440,13 +4450,13 @@
     "byeWeek": ""
   },
   {
-    "id": "0bc2e7fa-b5e5-4570-9709-0fdeb1ab5884",
-    "name": "Davis Allen",
+    "id": "b37b6f6c-4d40-4b28-96eb-8032f1852452",
+    "name": "Lil'Jordan Humphrey",
     "adp": null,
     "projectedPoints": 7.9,
     "positionRank": "",
-    "position": "TE",
-    "team": "LAR",
+    "position": "WR",
+    "team": "DEN",
     "byeWeek": ""
   },
   {
@@ -4840,16 +4850,6 @@
     "byeWeek": ""
   },
   {
-    "id": "b90e3184-7bb0-495a-a598-116eff63f7d9",
-    "name": "Brevin Jordan",
-    "adp": null,
-    "projectedPoints": 1.4,
-    "positionRank": "",
-    "position": "TE",
-    "team": "HOU",
-    "byeWeek": ""
-  },
-  {
     "id": "47b54337-699a-4a29-bc6c-7010673d3773",
     "name": "Tom Kennedy",
     "adp": null,
@@ -4860,13 +4860,13 @@
     "byeWeek": ""
   },
   {
-    "id": "bcb347c7-ee26-4f3d-9937-758f3ac1733e",
-    "name": "Israel Abanikanda",
+    "id": "b90e3184-7bb0-495a-a598-116eff63f7d9",
+    "name": "Brevin Jordan",
     "adp": null,
-    "projectedPoints": 1.2,
+    "projectedPoints": 1.4,
     "positionRank": "",
-    "position": "RB",
-    "team": "DAL",
+    "position": "TE",
+    "team": "HOU",
     "byeWeek": ""
   },
   {
@@ -4900,6 +4900,16 @@
     "byeWeek": ""
   },
   {
+    "id": "6ec722bf-3f74-4875-8674-1a4bff765329",
+    "name": "Britain Covey",
+    "adp": null,
+    "projectedPoints": 0.3,
+    "positionRank": "",
+    "position": "WR",
+    "team": "PHI",
+    "byeWeek": ""
+  },
+  {
     "id": "ecab8e2a-03a0-45b2-a77f-d7fe75c88047",
     "name": "Ko Kieft",
     "adp": null,
@@ -4907,16 +4917,6 @@
     "positionRank": "",
     "position": "TE",
     "team": "TB",
-    "byeWeek": ""
-  },
-  {
-    "id": "82ad0764-47cd-4497-b192-6d43fb8af08f",
-    "name": "Dontay Demus",
-    "adp": null,
-    "projectedPoints": 0,
-    "positionRank": "",
-    "position": "WR",
-    "team": "",
     "byeWeek": ""
   },
   {
@@ -5226,7 +5226,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "LAC",
     "byeWeek": ""
   },
   {
@@ -5626,7 +5626,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "NE",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -6616,7 +6616,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "CLE",
     "byeWeek": ""
   },
   {
@@ -6896,7 +6896,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
+    "team": "PHI",
     "byeWeek": ""
   },
   {
@@ -7536,16 +7536,6 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
-    "byeWeek": ""
-  },
-  {
-    "id": "b37b6f6c-4d40-4b28-96eb-8032f1852452",
-    "name": "Lil'Jordan Humphrey",
-    "adp": null,
-    "projectedPoints": 0,
-    "positionRank": "",
-    "position": "WR",
     "team": "",
     "byeWeek": ""
   },
@@ -9676,7 +9666,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "GB",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -10126,7 +10116,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "NYJ",
     "byeWeek": ""
   },
   {
@@ -10606,7 +10596,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
+    "team": "SF",
     "byeWeek": ""
   },
   {
@@ -11446,7 +11436,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "NYJ",
     "byeWeek": ""
   },
   {
@@ -11886,7 +11876,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "ARI",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -12196,7 +12186,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "ATL",
+    "team": "DAL",
     "byeWeek": ""
   },
   {
@@ -12337,16 +12327,6 @@
     "positionRank": "",
     "position": "WR",
     "team": "",
-    "byeWeek": ""
-  },
-  {
-    "id": "6ec722bf-3f74-4875-8674-1a4bff765329",
-    "name": "Britain Covey",
-    "adp": null,
-    "projectedPoints": 0,
-    "positionRank": "",
-    "position": "WR",
-    "team": "PHI",
     "byeWeek": ""
   },
   {
@@ -12826,7 +12806,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "NYG",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -13176,6 +13156,16 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
+    "team": "",
+    "byeWeek": ""
+  },
+  {
+    "id": "bcb347c7-ee26-4f3d-9937-758f3ac1733e",
+    "name": "Israel Abanikanda",
+    "adp": null,
+    "projectedPoints": 0,
+    "positionRank": "",
+    "position": "RB",
     "team": "",
     "byeWeek": ""
   },
@@ -14242,6 +14232,16 @@
   {
     "id": "10e0a2ff-5721-42d3-808a-c73914405da5",
     "name": "Dee Eskridge",
+    "adp": null,
+    "projectedPoints": 0,
+    "positionRank": "",
+    "position": "WR",
+    "team": "",
+    "byeWeek": ""
+  },
+  {
+    "id": "82ad0764-47cd-4497-b192-6d43fb8af08f",
+    "name": "Dontay Demus",
     "adp": null,
     "projectedPoints": 0,
     "positionRank": "",
