@@ -3270,16 +3270,6 @@
     "byeWeek": ""
   },
   {
-    "id": "a19ea407-bcfb-42a4-bf8d-29742ea85241",
-    "name": "Audric Estime",
-    "adp": 216,
-    "projectedPoints": 19.4,
-    "positionRank": "RB94",
-    "position": "RB",
-    "team": "NO",
-    "byeWeek": ""
-  },
-  {
     "id": "17f8f4db-0b38-48ff-b9e3-a42af0fc3aa2",
     "name": "Christian Kirk",
     "adp": 216,
@@ -3316,6 +3306,16 @@
     "projectedPoints": 0,
     "positionRank": "WR132",
     "position": "WR",
+    "team": "",
+    "byeWeek": ""
+  },
+  {
+    "id": "a19ea407-bcfb-42a4-bf8d-29742ea85241",
+    "name": "Audric Estime",
+    "adp": 216,
+    "projectedPoints": 0,
+    "positionRank": "RB94",
+    "position": "RB",
     "team": "",
     "byeWeek": ""
   },
@@ -5296,7 +5296,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
+    "team": "NYJ",
     "byeWeek": ""
   },
   {
@@ -6156,7 +6156,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "QB",
-    "team": "",
+    "team": "NYJ",
     "byeWeek": ""
   },
   {
@@ -7606,7 +7606,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "JAX",
+    "team": "LAC",
     "byeWeek": ""
   },
   {
@@ -8406,7 +8406,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "BAL",
     "byeWeek": ""
   },
   {
@@ -10336,7 +10336,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
+    "team": "JAX",
     "byeWeek": ""
   },
   {
@@ -10446,7 +10446,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "CAR",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -10486,7 +10486,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "SF",
     "byeWeek": ""
   },
   {
@@ -11466,7 +11466,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "TE",
-    "team": "",
+    "team": "NE",
     "byeWeek": ""
   },
   {
@@ -11836,7 +11836,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "CAR",
     "byeWeek": ""
   },
   {
@@ -11906,7 +11906,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "RB",
-    "team": "",
+    "team": "MIN",
     "byeWeek": ""
   },
   {
@@ -12526,7 +12526,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "QB",
-    "team": "NYJ",
+    "team": "",
     "byeWeek": ""
   },
   {
@@ -12676,7 +12676,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "PIT",
     "byeWeek": ""
   },
   {
