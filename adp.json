@@ -173,7 +173,7 @@
     "id": "6691d6ae-d453-45d2-9604-4120271a1259",
     "name": "Ashton Jeanty",
     "adp": 18.4,
-    "projectedPoints": 211.5,
+    "projectedPoints": 223.5,
     "positionRank": "RB12",
     "position": "RB",
     "team": "LV",
@@ -473,7 +473,7 @@
     "id": "8344283b-c062-4719-b8d9-ab751543e329",
     "name": "Bucky Irving",
     "adp": 49.3,
-    "projectedPoints": 161.5,
+    "projectedPoints": 179.5,
     "positionRank": "RB21",
     "position": "RB",
     "team": "TB",
@@ -2750,6 +2750,16 @@
     "byeWeek": ""
   },
   {
+    "id": "57754737-d485-4aac-b26c-c39e2da4157b",
+    "name": "Zach Ertz",
+    "adp": 215.9,
+    "projectedPoints": 19.3,
+    "positionRank": "TE46",
+    "position": "TE",
+    "team": "PHI",
+    "byeWeek": ""
+  },
+  {
     "id": "22b7ee23-cb3a-4d47-af90-a369c693e934",
     "name": "Anthony Richardson",
     "adp": 215.9,
@@ -2757,16 +2767,6 @@
     "positionRank": "QB37",
     "position": "QB",
     "team": "IND",
-    "byeWeek": ""
-  },
-  {
-    "id": "57754737-d485-4aac-b26c-c39e2da4157b",
-    "name": "Zach Ertz",
-    "adp": 215.9,
-    "projectedPoints": 0,
-    "positionRank": "TE46",
-    "position": "TE",
-    "team": "PHI",
     "byeWeek": ""
   },
   {
@@ -7186,7 +7186,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "",
+    "team": "IND",
     "byeWeek": ""
   },
   {
