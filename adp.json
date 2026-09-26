@@ -3010,6 +3010,16 @@
     "byeWeek": ""
   },
   {
+    "id": "a6a4c9bd-0043-48c6-9237-0987eb2a8b47",
+    "name": "Greg Dortch",
+    "adp": 216,
+    "projectedPoints": 32.4,
+    "positionRank": "WR129",
+    "position": "WR",
+    "team": "BUF",
+    "byeWeek": ""
+  },
+  {
     "id": "556a7c29-a17d-4660-a21a-8d9406502fe1",
     "name": "Emanuel Wilson",
     "adp": 216,
@@ -3027,16 +3037,6 @@
     "positionRank": "QB40",
     "position": "QB",
     "team": "KC",
-    "byeWeek": ""
-  },
-  {
-    "id": "a6a4c9bd-0043-48c6-9237-0987eb2a8b47",
-    "name": "Greg Dortch",
-    "adp": 216,
-    "projectedPoints": 0,
-    "positionRank": "WR129",
-    "position": "WR",
-    "team": "BUF",
     "byeWeek": ""
   },
   {
@@ -9056,7 +9056,7 @@
     "projectedPoints": 0,
     "positionRank": "",
     "position": "WR",
-    "team": "MIN",
+    "team": "",
     "byeWeek": ""
   },
   {
