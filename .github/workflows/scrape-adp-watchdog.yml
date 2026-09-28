@@ -1,9 +1,14 @@
 name: Scrape ADP Watchdog
 
 on:
-  schedule:
-    # Run 2 hours after the scheduled scraper (13:00 UTC) to catch missed runs
-    - cron: "0 15 * * *"
+  # FROZEN FOR THE 2026 SEASON, alongside scrape-adp.yml. With the scraper off
+  # there is no daily run to miss, and this watchdog would re-trigger it every
+  # single day — exactly the automation the freeze is meant to stop.
+  #
+  # Re-enable with the scraper for 2027. The 2-hour offset from the 13:00 UTC
+  # scrape is the only thing that matters here.
+  # schedule:
+  #   - cron: "0 15 * * *"
   workflow_dispatch:
 
 permissions:

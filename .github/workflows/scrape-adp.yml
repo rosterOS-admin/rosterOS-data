@@ -1,9 +1,16 @@
 name: Scrape Underdog ADP
 
 on:
-  schedule:
-    # Run daily at 13:00 UTC (8 AM ET / 5 AM PT) during draft season
-    - cron: "0 13 * * *"
+  # FROZEN FOR THE 2026 SEASON. Underdog closes every draft at week 1 kickoff,
+  # so ADP stopped moving after the 2026-09-10 13:00 UTC run — BBM, Eliminator
+  # and Weekly alike are byte-identical from that scrape onward. Running daily
+  # past that point only churned projectedPoints and teamName into the ADP
+  # history and pushed a misleading "last updated" onto the visualizer.
+  #
+  # Re-enable for the 2027 draft season by uncommenting the schedule below and
+  # refreshing the slate IDs from api.underdogfantasy.com/v2/lobby.
+  # schedule:
+  #   - cron: "0 13 * * *"
   workflow_dispatch: # allow manual trigger
 
 permissions:
